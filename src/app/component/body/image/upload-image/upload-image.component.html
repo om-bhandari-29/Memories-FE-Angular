@@ -1,0 +1,84 @@
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Upload Image</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="container-fluid">
+      <form [formGroup]="uploadImageForm">
+
+        <div class="row mx-0 mb-3">
+          <div class="col-md-2 px-0">
+            <label>Image</label>
+          </div>
+          <div class="col-md-1 px-0"></div>
+          <div class="col-md-9 px-0">
+            <div class="row mx-0">
+              <input type="file" class="form-control" formControlName="image" (change)="onFileSelect($event)"
+                accept="image/*">
+              <small class="text-danger px-0"
+                *ngIf="uploadImageForm.controls.image.touched || uploadImageForm.controls.image.dirty">
+                <small *ngIf="uploadImageForm.controls.image.errors?.['required']">
+                  Required
+                </small>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mx-0 mb-3">
+          <div class="col-md-2 px-0">
+            <label>Image name</label>
+          </div>
+          <div class="col-md-1 px-0"></div>
+          <div class="col-md-9 px-0">
+            <div class="row mx-0">
+              <input type="text" class="form-control" formControlName="imageName">
+              <small class="text-danger px-0"
+                *ngIf="uploadImageForm.controls.imageName.touched || uploadImageForm.controls.imageName.dirty">
+                <small *ngIf="uploadImageForm.controls.imageName.errors?.['required']">
+                  Required
+                </small>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mx-0 mb-3">
+          <div class="col-md-2 px-0">
+            <label>Image description</label>
+          </div>
+          <div class="col-md-1 px-0"></div>
+          <div class="col-md-9 px-0">
+            <div class="row mx-0">
+              <input type="text" class="form-control" formControlName="imageDescription">
+              <small class="text-danger px-0"
+                *ngIf="uploadImageForm.controls.imageDescription.touched || uploadImageForm.controls.imageDescription.dirty">
+                <small *ngIf="uploadImageForm.controls.imageDescription.errors?.['required']">
+                  Required
+                </small>
+              </small>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="modalRef?.hide()">Cancel</button>
+
+    <button *ngIf="isShowBtnLoader" class="btn btn-primary" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Loading...
+    </button>
+
+    <button  *ngIf="!isShowBtnLoader" class="btn btn-primary" (click)="submit()">Submit</button>
+    
+  </div>
+
+</ng-template>

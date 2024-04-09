@@ -1,0 +1,15 @@
+form {
+  width: 500px;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+
+.form-div-s{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 150px);
+  justify-content: center;
+  align-items: center;
+}

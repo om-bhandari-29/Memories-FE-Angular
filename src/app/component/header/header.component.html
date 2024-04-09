@@ -1,0 +1,16 @@
+<nav class="navbar navbar-light shadow-lg header-s bg-white-s" style="margin-bottom: 30px;">
+  <div class="p-0 m-0">
+    <a class="navbar-brand" [routerLink]="'/'">
+      <img src="./../../../assets/images/memoriesText.png" id="memories-text">
+    </a>
+    <a class="navbar-brand" [routerLink]="'/'">
+      <img src="./../../../assets/images/memoriesLogo.png" id="memories-logo">
+    </a>
+  </div>
+
+  <div>
+    <a *ngIf="!isLoggedIn" [routerLink]="'/login'"><button class="btn btn-info">Login</button></a>
+    <a *ngIf="!isLoggedIn" [routerLink]="'/register'"><button class="btn btn-info ml-20-s">Register</button></a>
+    <a *ngIf="isLoggedIn" (click)="logout()" ><button class="btn btn-info ml-20-s">Logout</button></a>
+  </div>
+</nav>

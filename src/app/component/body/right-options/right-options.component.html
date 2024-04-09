@@ -1,0 +1,31 @@
+<div class="shadow-lg row mb-5 upload-image-s bg-white-s">
+  <div class="col">
+    <div class="row mx-0 m-3">
+      <input type="search" class="form-control" placeholder="Search Memories">
+    </div>
+    <div class="row mx-0 m-3">
+      <button class="btn btn-primary">Search</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isShowAuthenticPart" class="shadow-lg row mb-5 upload-image-s bg-white-s">
+  <div class="col">
+    <div class="row mx-0 m-3">
+      <button class="btn btn-primary" (click)="uploadImage()">Upload Image</button>
+    </div>
+    <div class="row mx-0 m-3">
+      <a [routerLink]="'/my-uploads'" class="btn btn-primary">My Uploads</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isShowAuthenticPart"  class="shadow-lg row upload-image-s bg-white-s">
+  <div class="col">
+    <div class="row mx-0 m-2">
+      <h5>Please Sign In to create your own memories like other's memories.</h5>
+    </div>
+  </div>
+</div>
+
+<app-upload-image *ngIf="isShowAuthenticPart"></app-upload-image>

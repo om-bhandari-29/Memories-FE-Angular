@@ -1,0 +1,25 @@
+<div class="row mx-0 shadow-lg" style="height: calc(100vh - 180px);">
+  <div class="col-md-8 p-4">
+    <div class="row mx-0">
+      <h4 class="px-0">{{postDetail.imageName}}</h4>
+    </div>
+    <div class="row mx-0">
+      <p class="px-0">{{postDetail.imageDescription}}</p>
+    </div>
+    <div class="row mx-0">
+      <p class="px-0"><b>Creted By: </b>{{postDetail.uploadedBy}}</p>
+    </div>
+  </div>
+
+  <div class="col-md-4 p-5" style="display: flex; justify-content: start; flex-direction: column;">
+    <div class="row mx-0 mb-2" >
+      <img class=" px-0" [src]="postDetail.image" style="width: 100%; height: auto; max-height: 80%; border-radius: 8px;">
+    </div>
+    
+    <div *ngIf="postDetail.uploadedByUserId == loggedInUserId" class="row mx-0">
+      <button class="btn btn-danger" (click)="deletePostById(postDetail._id)">Delete</button>
+    </div>
+  </div>
+</div>
+
+<app-confirmation-dialogue></app-confirmation-dialogue>
