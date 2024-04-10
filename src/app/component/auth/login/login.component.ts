@@ -32,6 +32,8 @@ export class LoginComponent extends ComponentBase {
       this.isShowBtnLoader = true;
       const loginUData: LoginData = this.loginForm.value as LoginData;
   
+      this.headerOptions.isSilentCall = true;
+
       this.postMethodPromise<LoginData, ResponseGeneric<IUser>>(APIRoutes.login, loginUData, this.headerOptions).then(
         (res) =>{
           if(res.status){

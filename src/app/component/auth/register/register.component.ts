@@ -27,6 +27,8 @@ export class RegisterComponent extends ComponentBase {
       this.isShowBtnLoader = true;
       const registerUData: RegisterData = this.registerForm.value as RegisterData;
   
+      this.headerOptions.isSilentCall = true;
+
       this.postMethodPromise<RegisterData, ResponseGeneric<IUser>>(APIRoutes.register, registerUData, this.headerOptions).then(
         (res) =>{
           if(res.status){

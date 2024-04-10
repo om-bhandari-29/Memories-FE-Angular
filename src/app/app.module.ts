@@ -19,6 +19,8 @@ import { UploadImageComponent } from './component/body/image/upload-image/upload
 import { addTokenInterceptor } from './interceptor/add-token.interceptor';
 import { PostDetailsComponent } from './component/post-details/post-details.component';
 import { ConfirmationDialogueComponent } from './shared/component/confirmation-dialogue/confirmation-dialogue.component';
+import { LoaderComponent } from './shared/component/loader/loader.component';
+import { loaderInterceptor } from './interceptor/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { ConfirmationDialogueComponent } from './shared/component/confirmation-d
     RegisterComponent,
     UploadImageComponent,
     PostDetailsComponent,
-    ConfirmationDialogueComponent
+    ConfirmationDialogueComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { ConfirmationDialogueComponent } from './shared/component/confirmation-d
     HttpClientModule
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: loaderInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: addTokenInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

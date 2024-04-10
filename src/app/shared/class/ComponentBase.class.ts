@@ -1,11 +1,11 @@
 import { inject } from "@angular/core";
 import { environment } from "../../environment/environment";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { IHeaderOption } from "../../model/option.model";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 
-export class ComponentBase{
+export class ComponentBase {
 
   public baseURL: string = `${environment.baseURL}`;
   public isShowBtnLoader: boolean = false;
@@ -19,16 +19,27 @@ export class ComponentBase{
     isSilentCall: false
   }
 
-  public getMethodPromise<D>(url: string, option: IHeaderOption): Promise<D>{
+  public getMethodPromise<D>(url: string, myHeaders: IHeaderOption): Promise<D> {
+
+    let isSilentCall: boolean = false;
+
+    if(myHeaders.isSilentCall){
+      isSilentCall = true;
+    }
+
+    const myHeader: HttpHeaders = new HttpHeaders({
+      "is-silent-call": (isSilentCall) ? "true" : "false"
+    })
+    
     const hitUrl: string = `${this.baseURL}${url}`;
-    const newPromise = new Promise<D>((resolve, reject) =>{
-      this._httpClient.get<D>(hitUrl).subscribe({
-        next: (res) =>{
+    const newPromise = new Promise<D>((resolve, reject) => {
+      this._httpClient.get<D>(hitUrl, { headers: myHeader }).subscribe({
+        next: (res) => {
           this.isShowBtnLoader = false;
           resolve(res);
         },
 
-        error: (err) =>{
+        error: (err) => {
           this.isShowBtnLoader = false;
           reject(err);
           this._toastreService.error(err.msg);
@@ -39,16 +50,28 @@ export class ComponentBase{
     return newPromise;
   }
 
-  public postMethodPromise<D, R>(url: string, data: D, option: IHeaderOption): Promise<R>{
+  public postMethodPromise<D, R>(url: string, data: D, myHeaders: IHeaderOption): Promise<R> {
+
+    // console.log(option);
+    let isSilentCall: boolean = false;
+
+    if(myHeaders.isSilentCall){
+      isSilentCall = true;
+    }
+
+    const myHeader: HttpHeaders = new HttpHeaders({
+      "is-silent-call": (isSilentCall) ? "true" : "false"
+    })
+
     const hitUrl: string = `${this.baseURL}${url}`;
-    const newPromise = new Promise<R>((resolve, reject) =>{
-      this._httpClient.post<R>(hitUrl, data).subscribe({
-        next: (res) =>{
+    const newPromise = new Promise<R>((resolve, reject) => {
+      this._httpClient.post<R>(hitUrl, data, { headers: myHeader }).subscribe({
+        next: (res) => {
           this.isShowBtnLoader = false;
           resolve(res);
         },
 
-        error: (err) =>{
+        error: (err) => {
           this.isShowBtnLoader = false;
           reject(err);
           this._toastreService.error(err.msg);
@@ -59,16 +82,16 @@ export class ComponentBase{
     return newPromise;
   }
 
-  public deleteMethodPromise<R>(url: string, option: IHeaderOption): Promise<R>{
+  public deleteMethodPromise<R>(url: string, option: IHeaderOption): Promise<R> {
     const hitUrl: string = `${this.baseURL}${url}`;
-    const newPromise = new Promise<R>((resolve, reject) =>{
+    const newPromise = new Promise<R>((resolve, reject) => {
       this._httpClient.delete<R>(hitUrl).subscribe({
-        next: (res) =>{
+        next: (res) => {
           this.isShowBtnLoader = false;
           resolve(res);
         },
 
-        error: (err) =>{
+        error: (err) => {
           this.isShowBtnLoader = false;
           reject(err);
           this._toastreService.error(err.msg);
