@@ -1,6 +1,12 @@
-.left-s{
+.left-s {
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.post-details-div-s {
+  min-height: calc(100vh - 180px);
+  max-height: max-content;
+  background-color: #e9e2e2;
 }

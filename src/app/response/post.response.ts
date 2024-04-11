@@ -1,4 +1,5 @@
 export interface GetALLPost{
+  likes: String[];
   image: string;
   imageDescription: string;
   imageName: string;

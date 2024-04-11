@@ -1,13 +1,29 @@
 <div class="row mx-0">
-  
-  <div class="card p-0 c-p-s" (click)="navigateToPostDetails(post._id)" *ngFor="let post of postList">
-    <img class="card-img-top" [src]="post.image" [alt]="post.imageName" style="height: 50%;">
-    <div class="card-body">
+
+  <div class="col-md-3 col-xs col-lg-3
+   post p-0 c-p-s" *ngFor="let post of postList; let i=index">
+    <img (click)="navigateToPostDetails(post._id)" class="card-img-top" [src]="post.image" [alt]="post.imageName"
+      style="height: 50%; border-top-right-radius: 8px; border-top-left-radius: 8px;">
+
+    <div class="card-body" style="padding: 5px;">
       <h5 class="card-title">{{post.imageName}}</h5>
       <p *ngIf="post.imageDescription.length > 70" class="card-text">
         {{post.imageDescription | slice: 0: 60}} ...
       </p>
-      <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+
+      <ng-container *ngIf="!isUserLoggedIn">
+        <i class="bi bi-heart" (click)="showNotification()"></i>
+      </ng-container>
+
+      <ng-container *ngIf="isUserLoggedIn">
+        <i *ngIf="post.likes.includes(_utilService.loggedIdUserId); else unfilHeart" class="bi bi-heart-fill fill-red-s"
+          (click)="likeUnlikePost(i, false)"></i>
+        <ng-template #unfilHeart>
+          <i class="bi bi-heart" (click)="likeUnlikePost(i, true)"></i>
+        </ng-template>
+      </ng-container>
+      {{post.likes.length}}
+
     </div>
   </div>
 

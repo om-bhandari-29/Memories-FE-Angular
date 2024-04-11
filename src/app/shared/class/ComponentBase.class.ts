@@ -81,6 +81,37 @@ export class ComponentBase {
 
     return newPromise;
   }
+  public putMethodPromise<D, R>(url: string, data: D, myHeaders: IHeaderOption): Promise<R> {
+
+    // console.log(option);
+    let isSilentCall: boolean = false;
+
+    if(myHeaders.isSilentCall){
+      isSilentCall = true;
+    }
+
+    const myHeader: HttpHeaders = new HttpHeaders({
+      "is-silent-call": (isSilentCall) ? "true" : "false"
+    })
+
+    const hitUrl: string = `${this.baseURL}${url}`;
+    const newPromise = new Promise<R>((resolve, reject) => {
+      this._httpClient.put<R>(hitUrl, data, { headers: myHeader }).subscribe({
+        next: (res) => {
+          this.isShowBtnLoader = false;
+          resolve(res);
+        },
+
+        error: (err) => {
+          this.isShowBtnLoader = false;
+          reject(err);
+          this._toastreService.error(err.msg);
+        }
+      })
+    });
+
+    return newPromise;
+  }
 
   public deleteMethodPromise<R>(url: string, option: IHeaderOption): Promise<R> {
     const hitUrl: string = `${this.baseURL}${url}`;
