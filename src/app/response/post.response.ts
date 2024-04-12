@@ -5,6 +5,7 @@ export interface IPost<C> {
   imageName: string;
   uploadedBy: string;
   uploadedByUserId: string;
+  uploadedOn: string;
   comments: C;
   __v: number;
   _id: string;
@@ -15,6 +16,7 @@ export class GetALLPostC {
   imageName: string = '';
   uploadedBy: string = '';
   uploadedByUserId: string = '';
+  uploadedOn: string = '';
   comments: CComment[] = [];
   __v: number = 0;
   _id: string = '';

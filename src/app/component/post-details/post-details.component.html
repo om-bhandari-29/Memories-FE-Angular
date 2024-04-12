@@ -1,40 +1,14 @@
-<!-- <div class="row mx-0 shadow-lg post-details-div-s">
-  <div class="col-md-8 p-4">
-    <div class="row mx-0">
-      <h4 class="px-0">{{postDetail.imageName}}</h4>
-    </div>
-    <div class="row mx-0">
-      <p class="px-0">{{postDetail.imageDescription}}</p>
-    </div>
-    <div class="row mx-0">
-      <p class="px-0"><b>Created By: </b>{{postDetail.uploadedBy}}</p>
-    </div>
-  </div>
-
-
-
-  <div class="col-md-4 p-5" style="display: flex; justify-content: start; flex-direction: column;">
-    <div class="row mx-0 mb-2" >
-      <img class=" px-0" [src]="postDetail.image" style="width: 100%; height: auto; max-height: 80%; border-radius: 8px;">
-    </div>
-    
-    <div *ngIf="postDetail.uploadedByUserId == loggedInUserId" class="row mx-0">
-      <button class="btn btn-danger" (click)="deletePostById(postDetail._id)">Delete</button>
-    </div>
-  </div>
-</div> -->
-
 <div class="row mx-0 shadow-lg main-div-s">
 
   <div class="col-lg-4 right-div-s order-lg-2">
     <div class="img-div-s">
       <img [src]="postDetail.image" [alt]="postDetail.imageName">
     </div>
-    <!-- <hr> -->
+    
     @if (postDetail.uploadedByUserId == loggedInUserId) {
-      <div class="btn-div-s mb-3">
-        <button class="btn btn-danger" (click)="deletePostById(postDetail._id)">Delete</button>
-      </div>
+    <div class="btn-div-s mb-3">
+      <button class="btn btn-danger" (click)="deletePostById(postDetail._id)">Delete</button>
+    </div>
     }
   </div>
 
@@ -42,31 +16,39 @@
     <h4>{{postDetail.imageName}}</h4>
     <p>{{postDetail.imageDescription}}</p>
     <p><b>Created By :</b> {{postDetail.uploadedBy}} </p>
-    <p><b>Uploaded :</b> {{postDetail.uploadedByUserId}} </p>
+    <p><b>Uploaded :</b> {{postDetail.uploadedOn | timeAgo}} </p>
 
     <hr>
 
-    <label>Write a comment</label>
-    <br>
-    @if (isSubmit) {
-    <small class="text-danger">Required*</small>
+    @if (_utilService.loggedIdUserId != "") {
+      <label>Write a comment</label>
+      <br>
+      @if (isSubmit) {
+        <small class="text-danger">Required*</small>
+      }
+      <textarea style="width: 100%; height: 100px; margin: 0px;" [formControl]="textArea"></textarea>
+      <br>
+      <button (click)="submit(postDetail._id)" class="btn btn-info mb-5" style="width: 50%;">Submit</button>
+      <br>
     }
-    <textarea style="width: 100%; height: 100px; margin: 0px;" [formControl]="textArea"></textarea>
+    @else {
+      <br>
+      <div class="br-3">
+        <label>Login to comment</label>
+      </div>
+      <br>
+    }
 
-    <br>
-    <button (click)="submit(postDetail._id)" class="btn btn-info mb-5" style="width: 50%;">Submit</button>
-
-    <br>
 
     <label><b>Comments</b></label>
     <div class="cmt-div-s">
       @for (comment of postDetail.comments; track comment._id) {
-        <div class="comments-s">
-          <label><b>By: </b>{{comment.by}}</label>
-          <p>{{comment.comment}}</p>
-        </div>
+      <div class="comments-s">
+        <label><b>By: </b>{{comment.by}}</label>
+        <p>{{comment.comment}}</p>
+      </div>
       } @empty {
-        No Comments yet
+      No Comments yet
       }
     </div>
 

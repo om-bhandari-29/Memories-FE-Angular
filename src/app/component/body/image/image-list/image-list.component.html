@@ -63,7 +63,7 @@
 
 <div class="row mx-0">
 
-  <div class="shadow-lg mycard-s col-md-5 col-lg-3" *ngFor="let post of postList; let i=index">
+  <div class="shadow-lg mycard-s col-md-5 col-lg-3" *ngFor="let post of searchedPostList; let i=index">
     <div class="img-div-s c-p-s">
       <img (click)="navigateToPostDetails(post._id)" [src]="post.image" [alt]="post.imageName">
     </div>

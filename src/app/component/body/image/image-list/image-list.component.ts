@@ -15,6 +15,7 @@ import { environment } from '../../../../environment/environment';
 export class ImageListComponent extends ComponentBase implements OnInit {
 
   public postList: IPost<IComment[]>[] = [];
+  public searchedPostList: IPost<IComment[]>[] = [];
   public isMyUpload: boolean = false;
   public isUserLoggedIn: boolean = false;
 
@@ -32,6 +33,12 @@ export class ImageListComponent extends ComponentBase implements OnInit {
     this._utilService.updateImageList.subscribe(
       (upLoadedImg) =>{
         this.postList.push(upLoadedImg);
+      }
+    )
+
+    this._utilService.onPostSearchTyping.subscribe(
+      (searchStr: string) =>{
+        this.getPostBySearchString(searchStr);
       }
     )
   }
@@ -75,6 +82,7 @@ export class ImageListComponent extends ComponentBase implements OnInit {
     this.getMethodPromise<ResponseGeneric<IPost<IComment[]>[]>>(url, this.headerOptions).then(
       (res) => {
         this.postList = res.data;
+        this.searchedPostList = this.postList;
       }
     )
   }
@@ -97,6 +105,21 @@ export class ImageListComponent extends ComponentBase implements OnInit {
           this._utilService.loggedIdUserId = res.data._id;
         }
       )
+    }
+  }
+
+
+  private getPostBySearchString(str: string){
+
+    if(str != ""){
+      this.searchedPostList = this.postList.filter(
+        (post) => {
+          return post.imageName.toLowerCase().match(str.toLowerCase())
+        }
+      );
+    }
+    else{
+      this.searchedPostList = this.postList;
     }
   }
 }

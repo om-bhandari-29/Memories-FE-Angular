@@ -14,13 +14,14 @@ import { RightOptionsComponent } from './component/body/right-options/right-opti
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './component/auth/login/login.component';
 import { RegisterComponent } from './component/auth/register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UploadImageComponent } from './component/body/image/upload-image/upload-image.component';
 import { addTokenInterceptor } from './interceptor/add-token.interceptor';
 import { PostDetailsComponent } from './component/post-details/post-details.component';
 import { ConfirmationDialogueComponent } from './shared/component/confirmation-dialogue/confirmation-dialogue.component';
 import { LoaderComponent } from './shared/component/loader/loader.component';
 import { loaderInterceptor } from './interceptor/loader.interceptor';
+import { TimeAgoPipe } from './shared/pipe/time-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -34,10 +35,12 @@ import { loaderInterceptor } from './interceptor/loader.interceptor';
     UploadImageComponent,
     PostDetailsComponent,
     ConfirmationDialogueComponent,
-    LoaderComponent
+    LoaderComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),

@@ -14,7 +14,7 @@ export class UtilService extends ComponentBase {
 
 
   public updateImageList: EventEmitter<IPost<IComment[]>> = new EventEmitter<IPost<IComment[]>>();
-
+  public onPostSearchTyping: EventEmitter<string> = new EventEmitter<string>();
 
   public loggedInUser$ = new Subject<boolean>();
   public loggedIdUserId: string = "";

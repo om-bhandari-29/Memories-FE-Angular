@@ -24,7 +24,7 @@ export class PostDetailsComponent extends ComponentBase{
 
   @ViewChild(ConfirmationDialogueComponent) ConfirmationDialogueComponentObj!: ConfirmationDialogueComponent;
 
-  constructor(private _activatedRoute: ActivatedRoute, private _utilService: UtilService) {
+  constructor(private _activatedRoute: ActivatedRoute, public _utilService: UtilService) {
     super();
     this.getJwtToken();
 

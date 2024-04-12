@@ -36,6 +36,7 @@ export class HeaderComponent extends ComponentBase implements OnInit {
   public logout() {
     this.isLoggedIn = false;
     this._utilService.loggedInUser$.next(false);
+    this._utilService.loggedIdUserId = "";
     localStorage.clear();
     this._toastreService.success("Logged out successfully");
     this._router.navigate(['/']);

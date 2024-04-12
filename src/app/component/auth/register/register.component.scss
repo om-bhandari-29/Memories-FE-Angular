@@ -2,6 +2,7 @@ form {
   width: 100%;
   border-radius: 5px;
   padding: 20px;
+  background-color: white;
 }
 
 .form-div-s{
@@ -16,5 +17,7 @@ form {
 .col-md-6{
   border-radius: 5px;
   padding: 0px;
-  background: white;
+  // background: white;
+  display: flex;
+  align-items: center;
 }

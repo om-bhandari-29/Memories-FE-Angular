@@ -13,6 +13,7 @@ export class RightOptionsComponent implements OnInit {
 
 
   public isShowAuthenticPart: boolean = false;
+  public searchStr: string = "";
 
 
   constructor(private _utilService: UtilService) {
@@ -31,6 +32,10 @@ export class RightOptionsComponent implements OnInit {
 
   public uploadImage() {
     this.UploadImageComponentObj.openModal();
+  }
+
+  public onSearchTyping(event: Event){
+    this._utilService.onPostSearchTyping.emit(this.searchStr);
   }
 
 }

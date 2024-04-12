@@ -1,7 +1,11 @@
 <div class="shadow-lg row mb-5 upload-image-s bg-white-s">
   <div class="col">
     <div class="row mx-0 m-3">
-      <input type="search" class="form-control" placeholder="Search Memories">
+      <input type="search" class="form-control" 
+        [(ngModel)]="searchStr" 
+        placeholder="Search Memories"
+        (ngModelChange)="onSearchTyping($event)"
+      >
     </div>
     <div class="row mx-0 m-3">
       <button class="btn btn-primary">Search</button>

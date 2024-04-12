@@ -54,7 +54,11 @@
           <div class="col-md-1 px-0"></div>
           <div class="col-md-9 px-0">
             <div class="row mx-0">
-              <input type="text" class="form-control" formControlName="imageDescription">
+              <!-- <input type="text" class="form-control" formControlName="imageDescription"> -->
+              <textarea type="text" class="form-control" 
+                formControlName="imageDescription"
+                 cols="30" rows="2"
+              ></textarea>
               <small class="text-danger px-0"
                 *ngIf="uploadImageForm.controls.imageDescription.touched || uploadImageForm.controls.imageDescription.dirty">
                 <small *ngIf="uploadImageForm.controls.imageDescription.errors?.['required']">
