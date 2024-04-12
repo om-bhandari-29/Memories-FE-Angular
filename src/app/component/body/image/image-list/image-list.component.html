@@ -68,12 +68,11 @@
       <img (click)="navigateToPostDetails(post._id)" [src]="post.image" [alt]="post.imageName">
     </div>
 
-    <div class="para-div-s">
-      <h5 class="pl-5">{{post.imageName}}</h5>
-      <p *ngIf="post.imageDescription.length > 100" class="pl-5">
-        {{post.imageDescription | slice: 0: 100}} ...
+    <div class="para-div-s pl-5">
+      <h5>{{post.imageName}}</h5>
+      <p>
+        {{post.imageDescription}}
       </p>
-
     </div>
 
     <div class="third-div-s pl-5">

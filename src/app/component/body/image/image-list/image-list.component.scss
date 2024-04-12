@@ -78,9 +78,15 @@
 }
 
 .para-div-s {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
   overflow: hidden;
+  text-overflow: ellipsis;
+  // overflow: hidden;
+  // text-overflow: clip;
+  // white-space: pre-line;
   height: 40%;
-  // background: lightblue;
 }
 
 .third-div-s {
