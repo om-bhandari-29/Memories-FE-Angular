@@ -16,7 +16,6 @@ export class RightOptionsComponent implements OnInit {
 
 
   constructor(private _utilService: UtilService) {
-
   }
 
   ngOnInit(): void {

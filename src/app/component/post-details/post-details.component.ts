@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ComponentBase } from '../../shared/class/ComponentBase.class';
-import { GetALLPostC } from '../../response/post.response';
+import { IPost, GetALLPostC, IComment } from '../../response/post.response';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ResponseGeneric } from '../../response/responseG.response';
 import { APIRoutes } from '../../shared/constant/APIRoutes.constant';
@@ -8,6 +8,7 @@ import { environment } from '../../environment/environment';
 import { UtilService } from '../../service/util.service';
 import { IUser } from '../../response/user.model';
 import { ConfirmationDialogueComponent } from '../../shared/component/confirmation-dialogue/confirmation-dialogue.component';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-post-details',
@@ -18,6 +19,8 @@ export class PostDetailsComponent extends ComponentBase{
 
   public postDetail: GetALLPostC = new GetALLPostC();
   public loggedInUserId: string = "";
+  public isSubmit: boolean = false;
+  public textArea: FormControl = new FormControl("", Validators.required);
 
   @ViewChild(ConfirmationDialogueComponent) ConfirmationDialogueComponentObj!: ConfirmationDialogueComponent;
 
@@ -43,7 +46,7 @@ export class PostDetailsComponent extends ComponentBase{
             (res) =>{
               if(res.status){
                 this._toastreService.success(res.message);
-                this._router.navigate(['my-uploads']);
+                this._router.navigate(['/my-uploads']);
               }
               else{
                 this._toastreService.error(res.message);
@@ -53,6 +56,32 @@ export class PostDetailsComponent extends ComponentBase{
         }
       }
     )
+  }
+
+  public submit(postId: string){
+    if((this.textArea.value as string).trim().length < 1)
+      this.isSubmit = true;
+    else{
+      // make api call
+      const newComment: { comment: string } ={
+        comment: (this.textArea.value as string).trim()
+      }
+
+      this.headerOptions.isSilentCall = true;
+
+      this.postMethodPromise<{ comment: string }, ResponseGeneric<IPost<IComment[]>>>(APIRoutes.commentPostById(postId), newComment, this.headerOptions).then(
+        (res) =>{
+          if(res.status){
+            this.textArea.setValue("");
+            this._toastreService.success(res.message);
+            this.postDetail = res.data;
+          }
+          else{
+            this._toastreService.error(res.message);
+          }
+        }
+      )
+    }
   }
 
   private getDetails(postId: string) {

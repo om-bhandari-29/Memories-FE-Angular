@@ -6,6 +6,8 @@ import { ConvertToBase64 } from '../../../../shared/class/ConvertToBase64.class'
 import { ComponentBase } from '../../../../shared/class/ComponentBase.class';
 import { ResponseGeneric } from '../../../../response/responseG.response';
 import { APIRoutes } from '../../../../shared/constant/APIRoutes.constant';
+import { UtilService } from '../../../../service/util.service';
+import { IComment, IPost } from '../../../../response/post.response';
 
 @Component({
   selector: 'app-upload-image',
@@ -29,7 +31,7 @@ export class UploadImageComponent extends ComponentBase {
   });
 
 
-  constructor(private modalService: BsModalService) {
+  constructor(private modalService: BsModalService, private _utilService: UtilService) {
     super();
   }
 
@@ -48,9 +50,10 @@ export class UploadImageComponent extends ComponentBase {
         imageDescription: (this.uploadImageForm.controls.imageDescription.value as string).trim()
       }
 
-      this.postMethodPromise<ImageFormData, ResponseGeneric<null>>(APIRoutes.uploadImage, imageData, this.headerOptions).then(
+      this.postMethodPromise<ImageFormData, ResponseGeneric<IPost<IComment[]>>>(APIRoutes.uploadImage, imageData, this.headerOptions).then(
         (res) => {
           if (res.status) {
+            this._utilService.updateImageList.emit(res.data)
             this.modalRef?.hide();
             this._toastreService.success(res.message);
           }

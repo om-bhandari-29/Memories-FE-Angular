@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ComponentBase } from '../../../../shared/class/ComponentBase.class';
 import { APIRoutes } from '../../../../shared/constant/APIRoutes.constant';
-import { GetALLPost } from '../../../../response/post.response';
+import { IPost, IComment } from '../../../../response/post.response';
 import { ResponseGeneric } from '../../../../response/responseG.response';
 import { UtilService } from '../../../../service/util.service';
 import { IUser } from '../../../../response/user.model';
@@ -14,7 +14,7 @@ import { environment } from '../../../../environment/environment';
 })
 export class ImageListComponent extends ComponentBase implements OnInit {
 
-  public postList: GetALLPost[] = [];
+  public postList: IPost<IComment[]>[] = [];
   public isMyUpload: boolean = false;
   public isUserLoggedIn: boolean = false;
 
@@ -27,6 +27,13 @@ export class ImageListComponent extends ComponentBase implements OnInit {
 
     this._utilService.loggedInUser$.subscribe((res) =>
       this.isUserLoggedIn = res);
+
+
+    this._utilService.updateImageList.subscribe(
+      (upLoadedImg) =>{
+        this.postList.push(upLoadedImg);
+      }
+    )
   }
 
   public navigateToPostDetails(postId: string) {
@@ -65,7 +72,7 @@ export class ImageListComponent extends ComponentBase implements OnInit {
   }
 
   private getAllPostM(url: string) {
-    this.getMethodPromise<ResponseGeneric<GetALLPost[]>>(url, this.headerOptions).then(
+    this.getMethodPromise<ResponseGeneric<IPost<IComment[]>[]>>(url, this.headerOptions).then(
       (res) => {
         this.postList = res.data;
       }

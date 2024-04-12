@@ -17,7 +17,7 @@ export class HeaderComponent extends ComponentBase implements OnInit {
 
   public isLoggedIn: boolean = false;
 
-  constructor(private _utilService: UtilService) {
+  constructor(public _utilService: UtilService) {
     super();
 
     if (localStorage.getItem(environment.jwtTokenName)) {
@@ -42,12 +42,7 @@ export class HeaderComponent extends ComponentBase implements OnInit {
   }
 
   private getLoggedInUser() {
-    this.getMethodPromise<ResponseGeneric<IUser>>(APIRoutes.getUserDetails, this.headerOptions).then(
-      (res) => {
-        // console.log(res);
-        this._utilService.loggedIdUserId = res.data._id;
-      }
-    )
+    this._utilService.getLoggedInUser();
   }
 
 }

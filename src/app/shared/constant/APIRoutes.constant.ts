@@ -10,4 +10,5 @@ export const APIRoutes = {
 
   getPostDetail: (postId:  string) => `/post/${postId}`,
   deletePostById: (postId:  string) => `/post/${postId}`,
+  commentPostById: (postId:  string) => `/post/comment/${postId}`,
 }

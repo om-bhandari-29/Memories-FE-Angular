@@ -38,6 +38,7 @@ export class LoginComponent extends ComponentBase {
         (res) =>{
           if(res.status){
             this._toastreService.success(res.message);
+            this._utilService.loggedIdUserName = res.data.name;
             this._utilService.loggedInUser$.next(true);
             this._router.navigate(['/']);
             localStorage.setItem(environment.jwtTokenName, res.data.token);
