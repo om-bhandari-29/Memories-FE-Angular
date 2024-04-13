@@ -19,6 +19,7 @@ export class UploadImageComponent extends ComponentBase {
   private ConvertToBase64Obj = new ConvertToBase64();
 
   public image: string = "";
+  public isImageValidation: boolean = false;
 
   @ViewChild('template') modalTemplate!: TemplateRef<void>;
 
@@ -36,6 +37,7 @@ export class UploadImageComponent extends ComponentBase {
   }
 
   openModal() {
+    this.uploadImageForm.reset();
     this.modalRef = this.modalService.show(this.modalTemplate, { class: 'modal-lg' });
   }
 
@@ -43,31 +45,39 @@ export class UploadImageComponent extends ComponentBase {
   public submit() {
     this.uploadImageForm.markAllAsTouched();
 
-    if (this.uploadImageForm.valid) {
-      const imageData: ImageFormData = {
-        image: this.image,
-        imageName: (this.uploadImageForm.controls.imageName.value as string).trim(),
-        imageDescription: (this.uploadImageForm.controls.imageDescription.value as string).trim()
-      }
-
-      this.postMethodPromise<ImageFormData, ResponseGeneric<IPost<IComment[]>>>(APIRoutes.uploadImage, imageData, this.headerOptions).then(
-        (res) => {
-          if (res.status) {
-            this._utilService.updateImageList.emit(res.data)
-            this.modalRef?.hide();
-            this._toastreService.success(res.message);
-          }
-          else {
-            this._toastreService.error(res.message);
-          }
-        }
-      )
+    if (this.isImageValidation) {
+      this._toastreService.error("Only image is allowed");
+      this.uploadImageForm.controls.image.reset();
     }
+    else {
+      if (this.uploadImageForm.valid) {
+        const imageData: ImageFormData = {
+          image: this.image,
+          imageName: (this.uploadImageForm.controls.imageName.value as string).trim(),
+          imageDescription: (this.uploadImageForm.controls.imageDescription.value as string).trim()
+        }
+
+        this.postMethodPromise<ImageFormData, ResponseGeneric<IPost<IComment[]>>>(APIRoutes.uploadImage, imageData, this.headerOptions).then(
+          (res) => {
+            if (res.status) {
+              this._utilService.updateImageList.emit(res.data)
+              this.modalRef?.hide();
+              this._toastreService.success(res.message);
+            }
+            else {
+              this._toastreService.error(res.message);
+            }
+          }
+        )
+      }
+    }
+
   }
 
   public onFileSelect(event: any) {
     let fileType: string = event.target.files[0].type;
     if (fileType.startsWith('image')) {
+      this.isImageValidation = false;
       this.ConvertToBase64Obj.imageToBase64Promise(event).then(
         (res) => {
           this.image = res;
@@ -76,6 +86,8 @@ export class UploadImageComponent extends ComponentBase {
     }
     else {
       this._toastreService.error("Only Image is Allowed");
+      this.image = "";
+      this.isImageValidation = true;
     }
   }
 

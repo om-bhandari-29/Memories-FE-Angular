@@ -23,6 +23,9 @@
                 *ngIf="uploadImageForm.controls.image.touched || uploadImageForm.controls.image.dirty">
                 <small *ngIf="uploadImageForm.controls.image.errors?.['required']">
                   Required
+                  <small *ngIf="isImageValidation">
+                    Only image is allowed
+                  </small>
                 </small>
               </small>
             </div>
@@ -54,7 +57,6 @@
           <div class="col-md-1 px-0"></div>
           <div class="col-md-9 px-0">
             <div class="row mx-0">
-              <!-- <input type="text" class="form-control" formControlName="imageDescription"> -->
               <textarea type="text" class="form-control" 
                 formControlName="imageDescription"
                  cols="30" rows="2"
