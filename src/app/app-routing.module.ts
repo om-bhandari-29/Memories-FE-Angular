@@ -7,11 +7,11 @@ import { authGuard } from './guard/auth.guard';
 import { PostDetailsComponent } from './component/post-details/post-details.component';
 
 const routes: Routes = [
-  { path: '', component: BodyComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'my-uploads', component: BodyComponent, canActivate: [authGuard] },
-  { path: ':postId', component: PostDetailsComponent },
+  { path: '', component: BodyComponent, title: "Home" },
+  { path: 'login', component: LoginComponent, title: 'Login' },
+  { path: 'register', component: RegisterComponent, title: 'Register' },
+  { path: 'my-uploads', component: BodyComponent, title: 'My-uploads', canActivate: [authGuard] },
+  { path: ':postId', component: PostDetailsComponent, title: 'Post details'},
 ];
 
 @NgModule({
