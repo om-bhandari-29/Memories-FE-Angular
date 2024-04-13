@@ -33,6 +33,7 @@ export class ImageListComponent extends ComponentBase implements OnInit {
     this._utilService.updateImageList.subscribe(
       (upLoadedImg) =>{
         this.postList.push(upLoadedImg);
+        this.searchedPostList.push(upLoadedImg);
       }
     )
 
